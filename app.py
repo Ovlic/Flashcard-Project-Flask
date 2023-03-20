@@ -16,7 +16,7 @@ from oauthlib.oauth2 import WebApplicationClient
 import requests
 
 # Internal imports
-from db import init_db_command
+import db
 from user import User
 
 # Configuration
@@ -43,8 +43,7 @@ def unauthorized():
 
 # Naive database setup
 try:
-    pass
-    #init_db_command()
+    db.init_app(app)
 except sqlite3.OperationalError:
     # Assume it's already been created
     pass
