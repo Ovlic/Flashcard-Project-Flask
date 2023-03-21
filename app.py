@@ -51,7 +51,8 @@ def unauthorized():
 
 # Naive database setup
 try:
-    db.init_db_command()
+    #db.init_db_command()
+    pass
 except sqlite3.OperationalError:
     # Assume it's already been created
     pass
