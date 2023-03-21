@@ -16,7 +16,6 @@ from oauthlib.oauth2 import WebApplicationClient
 import requests
 
 # Internal imports
-import db
 from user import User
 
 # Configuration
@@ -49,13 +48,19 @@ def unauthorized():
     return "You must be logged in to access this content.", 403
 
 
-# Naive database setup
-try:
-    #db.init_db_command()
-    pass
-except sqlite3.OperationalError:
-    # Assume it's already been created
-    pass
+# # Naive database setup
+# try:
+#     import db
+#     from user import User
+#     db.init_db_command()
+# except sqlite3.OperationalError:
+#     # Assume it's already been created
+#     pass
+
+def get_db_connection():
+    conn = sqlite3.connect('database.db')
+    conn.row_factory = sqlite3.Row
+    return conn
 
 # OAuth2 client setup
 client = WebApplicationClient(GOOGLE_CLIENT_ID)
@@ -153,6 +158,7 @@ def callback():
         User.create(unique_id, users_name, users_email, picture)
 
     # Begin user session by logging the user in
+    print("Logging in user %s" % users_name)
     login_user(user)
 
     # Send user back to homepage
