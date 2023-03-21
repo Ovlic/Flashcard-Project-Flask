@@ -27,7 +27,15 @@ GOOGLE_DISCOVERY_URL = (
 )
 
 # Flask app setup
-app = Flask(__name__)
+def create_app():
+    app = Flask(__name__)
+
+    import db
+    db.init_app(app)
+
+    return app
+
+app = create_app() #Flask(__name__)
 app.secret_key = os.urandom(24)
 
 # User session management setup
@@ -162,4 +170,4 @@ def get_google_provider_cfg():
 
 
 if __name__ == "__main__":
-    app.run(ssl_context="adhoc", debug=True)
+    app.run(ssl_context="adhoc")#, host="0.0.0.0", port="5000", debug=True)
