@@ -27,15 +27,15 @@ GOOGLE_DISCOVERY_URL = (
 )
 
 # Flask app setup
-def create_app():
-    app = Flask(__name__)
+# def create_app():
+#     app = Flask(__name__)
 
-    import db
-    db.init_app(app)
+#     import db
+#     db.init_db_command(app)
 
-    return app
+#     return app
 
-app = create_app() #Flask(__name__)
+app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
 # User session management setup
@@ -51,7 +51,7 @@ def unauthorized():
 
 # Naive database setup
 try:
-    db.init_app(app)
+    db.init_db_command()
 except sqlite3.OperationalError:
     # Assume it's already been created
     pass
